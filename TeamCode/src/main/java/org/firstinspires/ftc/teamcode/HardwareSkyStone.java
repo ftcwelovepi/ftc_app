@@ -68,12 +68,12 @@ public class HardwareSkyStone  {
         backRight = hwMap.get(DcMotor.class, "back_right");
         backLeft = hwMap.get(DcMotor.class, "back_left");
 
-        realgyro = hwMap.get(ModernRoboticsI2cGyro.class, "gyro");
-        realgyro.calibrate();
 
 
         if (!test) {
             //Define and Initialize Sensors
+            realgyro = hwMap.get(ModernRoboticsI2cGyro.class, "gyro");
+            realgyro.calibrate();
 
 
             realgyro2 = hwMap.get(ModernRoboticsI2cGyro.class, "gyro2");
@@ -118,9 +118,10 @@ public class HardwareSkyStone  {
         frontRight.setPower(0);
         backRight.setPower(0);
         backLeft.setPower(0);
-        realgyro.resetZAxisIntegrator();
+
 
         if (!test) {
+            realgyro.resetZAxisIntegrator();
             raiser.setPower(0);
             hanger.setPower(0);
 

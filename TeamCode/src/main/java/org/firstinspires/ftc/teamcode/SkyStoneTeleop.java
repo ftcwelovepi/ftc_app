@@ -53,15 +53,12 @@ import static org.firstinspires.ftc.teamcode.HardwareSkyStone.TeleOpRunMode;
  *
  */
 
-@TeleOp(name="RoverRuckus: TeleOp Tank", group="RoverRuckus")
+@TeleOp(name="Skystone Teleop: Mecanum", group="RoverRuckus")
 public class SkyStoneTeleop extends OpMode{
 
 
     // declaring variables
 
-    double liftPower = 0;
-
-    float slidemultiplier = 0.95f;
 
     float bucketLimiter = 1f;
 
@@ -77,7 +74,7 @@ public class SkyStoneTeleop extends OpMode{
     boolean spinY;
 
     boolean startTheDrop;
-    int raiserAngle;
+
 
     Integer gyroAngle;
 
@@ -88,11 +85,7 @@ public class SkyStoneTeleop extends OpMode{
 
     private ElapsedTime runtime = new ElapsedTime();
 
-    private String soundPath = "/FIRST/blocks";
-    private File naniFile   = new File( "/sdcard" + soundPath + "/nanigood.mp3");
-    private File oofFile   = new File(  "/sdcard" + soundPath + "/oof.mp3");
-    private File bruhFile   = new File(  "/sdcard" + soundPath + "/bruh.mp3");
-    private File xpFile   = new File(  "/sdcard" + soundPath + "/xp.mp3");
+
     boolean naniFound;
     boolean bruhfound;
     boolean ooffound;
@@ -132,10 +125,7 @@ public class SkyStoneTeleop extends OpMode{
         spinX = false;
         spinY = false;
         startTheDrop = false;
-        naniFound = naniFile.exists();
-        ooffound = oofFile.exists();
-        bruhfound = bruhFile.exists();
-        xpfound = xpFile.exists();
+
 
         vroom = new MecanumDriveTrain(robot, gamepad1,telemetry);
 
@@ -170,47 +160,41 @@ public class SkyStoneTeleop extends OpMode{
         vroom.loop();
 
 
-        // Press gamepad 1 x to initiate water game
-        if ((gamepad1.dpad_left  || gamepad2.dpad_left) && !pastNani){
-            if (naniFound){
-                SoundPlayer.getInstance().stopPlayingAll();
-                SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, naniFile);
-                telemetry.addData("sound playing","yess");
-                telemetry.update();
-            }else{
-                telemetry.addData("sound not found","yoo");
-                telemetry.update();
+        // turn on/off spinner
+        if (gamepad2.x && !pastStateX) {
+            spinX = !spinX;
+            if (spinX) {
+                spinY = false;
             }
         }
-        pastNani = gamepad1.dpad_left || gamepad2.dpad_left;
+        pastStateX = gamepad2.x;
 
-        if ((gamepad1.dpad_down  || gamepad2.dpad_down) && !pastOof ){
-            if (ooffound){
-                SoundPlayer.getInstance().stopPlayingAll();
-                SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, oofFile);
-            }
-
-        }
-        pastOof = gamepad1.dpad_down || gamepad2.dpad_down;
-
-        if ((gamepad2.dpad_right || gamepad1.dpad_right) && !pastBruh){
-            if (bruhfound){
-                SoundPlayer.getInstance().stopPlayingAll();
-                SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, bruhFile);
+        // turn on/off spinner in opposite direction
+        if (gamepad2.y && !pastStateY) {
+            spinY = !spinY;
+            if (spinY) {
+                spinX = false;
             }
         }
-        pastBruh = gamepad1.dpad_right || gamepad2.dpad_right;
+        pastStateY = gamepad2.y;
 
-        if ((gamepad2.dpad_up || gamepad1.dpad_up) && !pastXp){
-            if (xpfound){
-                SoundPlayer.getInstance().stopPlayingAll();
-                SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, xpFile);
-            }
+        //If you press a, the spinner will stop spinning regardless of its initial state
+        if (gamepad2.a) {
+            spinY = false;
+            spinX = false;
         }
-        pastXp = gamepad1.dpad_up || gamepad2.dpad_up;
 
-
-
+        // spinner limiting and logic
+        if (spinX) {
+            robot.spinner.setPower(-1.0 * bucketLimiter);
+            robot.spinner2.setPower(-1.0 * bucketLimiter);
+        } else if (spinY) {
+            robot.spinner.setPower(bucketLimiter);
+            robot.spinner2.setPower(bucketLimiter);
+        } else {
+            robot.spinner.setPower(0);
+            robot.spinner2.setPower(0);
+        }
 
 
         telemetry.update();

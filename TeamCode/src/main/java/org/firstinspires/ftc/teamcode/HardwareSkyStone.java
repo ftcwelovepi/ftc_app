@@ -30,6 +30,7 @@ public class HardwareSkyStone  {
 
     public DcMotor slider = null;
     public DcMotor  spinner = null;
+    public DcMotor spinner2 = null;
 
     private boolean test = true;
 
@@ -67,6 +68,9 @@ public class HardwareSkyStone  {
         frontRight = hwMap.get(DcMotor.class, "front_right");
         backRight = hwMap.get(DcMotor.class, "back_right");
         backLeft = hwMap.get(DcMotor.class, "back_left");
+        spinner = hwMap.get(DcMotor.class, "succ_1");
+        spinner2 = hwMap.get(DcMotor.class,"succ_2");
+
 
 
 
@@ -90,7 +94,7 @@ public class HardwareSkyStone  {
 
 
             //bucket dumping motor
-            spinner = hwMap.get(DcMotor.class, "spinner");
+
 
 
             //Define and Initialize Servo
@@ -102,13 +106,15 @@ public class HardwareSkyStone  {
         frontRight.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         backRight.setDirection(DcMotor.Direction.FORWARD);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
+        spinner.setDirection(DcMotor.Direction.REVERSE);
+        spinner2.setDirection(DcMotor.Direction.FORWARD);
 
         if (!test) {
             raiser.setDirection(DcMotor.Direction.REVERSE);
             hanger.setDirection(DcMotor.Direction.REVERSE);
 
             slider.setDirection(DcMotor.Direction.REVERSE);
-            spinner.setDirection(DcMotor.Direction.REVERSE);
+
         }
 
 
@@ -118,6 +124,8 @@ public class HardwareSkyStone  {
         frontRight.setPower(0);
         backRight.setPower(0);
         backLeft.setPower(0);
+        spinner.setPower(0);
+        spinner2.setPower(0);
 
 
         if (!test) {
@@ -126,7 +134,7 @@ public class HardwareSkyStone  {
             hanger.setPower(0);
 
             slider.setPower(0);
-            spinner.setPower(0);
+
             // Set arm position to up to start with
             markerDropper.setPosition(ARM_UP_POSITION);
         }
@@ -139,12 +147,14 @@ public class HardwareSkyStone  {
             frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            spinner.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            spinner2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
             if (!test) {
                 raiser.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 hanger.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 slider.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                spinner.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
             }
         }
         else {
@@ -154,13 +164,15 @@ public class HardwareSkyStone  {
             frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            spinner.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            spinner2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
             if (!test) {
                 raiser.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 hanger.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
                 slider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                spinner.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
             }
 
 
@@ -175,7 +187,7 @@ public class HardwareSkyStone  {
                 hanger.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
                 slider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                // spinner.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
             }
 
 

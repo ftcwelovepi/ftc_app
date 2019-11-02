@@ -727,6 +727,40 @@ public abstract class BaseAutonomous extends LinearOpMode {
         robot.slider.setPower(0);
     }
 
+    public void succ(long time) {
+        robot.spinner.setPower(-1);
+        robot.spinner2.setPower(-1);
+        sleep(time);
+        robot.spinner.setPower(0);
+        robot.spinner2.setPower(0);
+
+    }
+
+    public void spit() {
+        robot.spinner.setPower(1);
+        robot.spinner2.setPower(1);
+        sleep(1000);
+        robot.spinner.setPower(0);
+        robot.spinner2.setPower(0);
+
+    }
+
+    public void leftTurn(){
+        robot.frontLeft.setPower(-1);
+        robot.backLeft.setPower(-1);
+        sleep(270);
+        robot.frontLeft.setPower(0);
+        robot.backLeft.setPower(0);
+    }
+
+    public void rightTurn(){
+        robot.frontLeft.setPower(0.5);
+        robot.backLeft.setPower(0.5);
+        sleep(400);
+        robot.frontLeft.setPower(0);
+        robot.backLeft.setPower(0);
+    }
+
 
     //Object Detection functions
 
